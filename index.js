@@ -12,3 +12,6 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port);
+export default function Home() {
+  return <h1>Joe's Breakout Calls is live!</h1>;
+}
