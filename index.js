@@ -1,17 +1,44 @@
-let express = require('express');
-let app = express();
-let ejs = require('ejs');
-const haikus = require('./haikus.json');
-const port = process.env.PORT || 3000;
+import { useEffect, useState } from 'react';
 
-app.use(express.static('public'))
-app.set('view engine', 'ejs');
+const TABS = ['Crypto', 'Stocks', 'Memecoins'];
 
-app.get('/', (req, res) => {
-  res.render('index', {haikus: haikus});
-});
-
-app.listen(port);
 export default function Home() {
-  return <h1>Joe's Breakout Calls is live!</h1>;
+  const [tab, setTab] = useState('Crypto');
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = () => {
+      fetch(`/api/${tab.toLowerCase()}`)
+        .then(res => res.json())
+        .then(setData)
+        .catch(() => setData([]));
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 2 * 60 * 1000); // refresh every 2 minutes
+    return () => clearInterval(interval);
+  }, [tab]);
+
+  return (
+    <div style={{ fontFamily: 'Arial', padding: '2rem' }}>
+      <h1>Joe's Breakout Calls</h1>
+      <div style={{ marginBottom: '1rem' }}>
+        {TABS.map(t => (
+          <button key={t} onClick={() => setTab(t)} style={{ marginRight: '1rem' }}>
+            {t}
+          </button>
+        ))}
+      </div>
+      <h2>{tab} - Top Picks</h2>
+      <ul>
+        {data.map((d, i) => (
+          <li key={i}>
+            <strong>{d.name}</strong> — Score: {d.score?.toFixed(2)}<br />
+            Price: ${d.price || '—'}<br />
+            Reason: {d.reason}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
