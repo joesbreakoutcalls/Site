@@ -1,6 +1,27 @@
 
-# Haikus for Codespaces
+# Predictive Breakout Model
 
-This is a quick node project template for demoing Codespaces. It is based on the [Azure node sample](https://github.com/Azure-Samples/nodejs-docs-hello-world). It's great!!!
+## Description
+This app provides real-time predictions for breakout assets (crypto, stocks, penny stocks) using live data, advanced AI scoring, and alerts.
 
-Point your browser to [Quickstart for GitHub Codespaces](https://docs.github.com/en/codespaces/getting-started/quickstart) for a tour of using Codespaces with this repo.
+## Features
+- Real-time API connections (CoinGecko, DexScreener, Yahoo Finance)
+- Predictive breakout scoring
+- AI learning feedback loop
+- Secure login gate
+- Telegram/Discord alerts
+- Fully responsive frontend
+- Auto-refresh every 2 minutes
+
+## Deployment (Railway)
+1. Clone this repo.
+2. Add environment variables from `.env.example`.
+3. Deploy on [Railway](https://railway.app).
+
+## Run Locally
+```bash
+uvicorn main:app --reload
+```
+
+## Author
+Confidential — code phrase: phoenix-roscoe-dasher-amigo
